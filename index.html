@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRM MPD Player</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.1/shaka-player.min.js"></script>
+</head>
+<body>
+    <h1>DRM MPD Player</h1>
+    <video id="video" width="640" controls autoplay></video>
+    <script>
+        async function initPlayer() {
+            const video = document.getElementById('video');
+            const player = new shaka.Player(video);
+
+            // إدخال المفتاح يدويًا
+            player.getNetworkingEngine().registerRequestFilter((type, request) => {
+                if (type === shaka.net.NetworkingEngine.RequestType.LICENSE) {
+                    // تعديل بيانات الترخيص (المفتاح)
+                    request.body = JSON.stringify({
+                        key: '
+4ccb01903d6868e27953ff0298d4ac05:d156518d6ab453d9f9d12c243280be8f'
+                    });
+                }
+            });
+
+            try {
+                await player.load('https://neacdnpop3-edge02.aws.playco.com/live/eds/ART_Hekayat_2/DASH/ART_Hekayat_2.mpd');
+                console.log('Video loaded successfully!');
+            } catch (error) {
+                console.error('Error loading video', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initPlayer);
+    </script>
+</body>
+</html>
