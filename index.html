@@ -25,13 +25,15 @@
                 }
             });
 
-            try {
-                await player.load('https://neacdnpop3-edge02.aws.playco.com/live/eds/ART_Hekayat_2/DASH/ART_Hekayat_2.mpd');
-                console.log('Video loaded successfully!');
-            } catch (error) {
-                console.error('Error loading video', error);
-            }
-        }
+   
+        
+        try {
+    await player.load('https://neacdnpop3-edge02.aws.playco.com/live/eds/ART_Hekayat_2/DASH/ART_Hekayat_2.mpd'); // رابط ملف MPD
+    console.log('Video loaded successfully!');
+} catch (error) {
+    console.error('Error loading video:', error);
+    alert('Error: ' + error.message);
+}
 
         document.addEventListener('DOMContentLoaded', initPlayer);
     </script>
